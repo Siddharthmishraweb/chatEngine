@@ -1,35 +1,34 @@
 <header id="layout-header">
     <nav>
-        <div class="mini-logo">
-            <p>
-                <a href='/'>
-                    codeial
-                </a>
-            </p>
+        <div class="logo">
+            <a href='/' style="display: flex">
+
+                <img src="https://files.codingninjas.in/438375-17407.webp" alt="Codial Logo">
+                <h1 style="display: inline; padding-left: 22px; color:#1B74E4;">Codial</h1>
+            </a>
         </div>
     
         <div class="auth-links">
             <ul>
-                <% if (locals.user){ %>
-                <li>
-                    <a href="/users/profile"><%= user.name %></a>
-                </li>
-                <li>
-                    <a href="/users/sign-out">Sign Out</a>
-                </li>
-                <% }else{ %>
-                <li>
-                    <a href="/users/sign-in">Sign In</a>
-                </li>
-                <li>
-                    <a href="/users/sign-up">Sign Up</a>
-                </li>
-        
+                <% if (locals.user) { %>
+                    <li class="user-profile">
+                        <a href="/users/profile/<%= user.id %>">
+                            <img src="<%= user.avatar %>" alt="<%= user.name %>" class="user-avatar">
+                            <%= user.name %>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="button" href="/users/sign-out">Sign Out</a>
+                    </li>
+                <% } else { %>
+                    <li>
+                        <a class="button" href="/users/sign-in">Sign In</a>
+                    </li>
+                    <li>
+                        <a class="button" href="/users/sign-up">Sign Up</a>
+                    </li>
                 <% } %>
             </ul>
         </div>
     </nav>
- 
-
-
 </header>

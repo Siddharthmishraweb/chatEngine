@@ -1,2 +1,62 @@
-body {
-  background-color: lightblue; }
+/* user_profile.css */
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  background-color: white;
+  margin: 0px auto;
+  padding: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  border-image: initial;
+  border-radius: 5px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-header img {
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="file"],
+form input[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-info {
+  margin-top: 20px;
+}
+
+.profile-info p {
+  margin-bottom: 10px;
+}
+
+body #layout-main {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

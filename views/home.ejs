@@ -1,37 +1,63 @@
 <link rel="stylesheet" href="/css/home.css">
 <link rel="stylesheet" href="/css/chat_box.css">
+<style>
+    .user-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .user-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .user-name {
+        width: 143px;
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #1B74E4;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .user-name:hover {
+        background-color: #1565c0;
+    }
+</style>
 
 <div id="home-container">
     <section id="feed-posts">
-            <h4>Posts</h4>
-            <% if(locals.user){ %>
-            <form action="/posts/create" id="new-post-form" method="POST">
-                <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required></textarea>
-                <input type="submit" value="Post">
+            <h4 style="width:100%; font-weight: 800; color: #333;">Posts</h4>
+            <% if (locals.user) { %>
+            <form action="/posts/create" id="new-post-form" method="POST" style="margin-bottom: 20px;">
+                <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required style="width: 100%; padding: 10px;"></textarea>
+                <input type="submit" value="Post" style="width:100%; display: block; margin-top: 10px; padding: 10px 20px; background-color: #1B74E4; color: white; border: none; border-radius: 4px; cursor: pointer;">
             </form>
-            <% } %>
-        
+            <% } %>       
             <div id="posts-list-container">
                 <ul>
                     <% for(post of posts){ %>
-                        
-                    <%- include('_post') -%>
-                        
+                       <%- include('_post') -%>
                     <%} %>
                 </ul>
             </div>
         </section>
-        
-        
-        <section id="user-friends">
-            <h4>Friends</h4>
-            <% for(u of all_users){%>
-                <p>
-                    <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
-                </p>
+        <section id="user-friends" style="background-color: #F2F2F2; padding: 20px; border-radius: 4px;">
+            <h4 style="text-align: center; color: #333;">Friends</h4>
+            <% for (u of all_users) { %>
+                <div class="user-item">
+                    <% if (u.avatar) { %>
+                        <img class="user-avatar" src="<%= u.avatar %>" alt="<%= u.name %>">
+                    <% } %>
+                    <a href="/users/profile/<%= u.id %>" class="user-name"><%= u.name %></a>
+                </div>
             <% } %>
-        </section>
-
+        </section>        
     <%- include('_chat_box') -%>
 </div>
 

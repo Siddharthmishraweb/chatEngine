@@ -3,4 +3,6 @@ body {
   /* text-align: center; */ }
   body #layout-main {
     height: 100%;
-    overflow: auto; }
+    overflow: auto;
+    background-color:#F0F2F5;
+  }
