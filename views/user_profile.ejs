@@ -26,12 +26,41 @@
 <link rel="stylesheet" href="/css/user_profile.css">
 
 <div class="user-profile">
-    <div class="profile-header">
+    <!-- <div class="profile-header">
         <img src="<%= profile_user.avatar %>" alt="<%= profile_user.name %>" width="100">
         <h2><%= profile_user.name %></h2>
-    </div>
+    </div> -->
 
     <% if (user.id === profile_user.id) { %>
+        <div class="profile-header">
+            <!-- <img src="<%= profile_user.avatar %>" alt="<%= profile_user.name %>" width="100">
+            <h2><%= profile_user.name %></h2> -->
+
+
+            <section class="main">
+                <div class="profile-card">
+                  <div class="image">
+                    <img
+                     src="<%= profile_user.avatar %>"
+                     alt=""
+                      class="profile-pic"
+                    />
+                  </div>
+                  <div class="data">
+                    <h2><%= profile_user.name %></h2>
+                    <span><%= profile_user.email %></span>
+                  </div>
+                  <div class="buttons">
+                    <a href="/" class="btn">Home</a>
+                    <a href="<%= profile_user.avatar %>" class="btn">Download</a>
+                  </div>
+                </div>
+              </section>
+
+
+
+
+        </div>
         <!-- If the user matches, show the form -->
         <form action="/users/update/<%= profile_user.id %>" enctype="multipart/form-data" method="POST">
             <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
@@ -40,10 +69,28 @@
             <input type="submit" value="Update" style="background-color: #1B74E4; color: white;">
         </form>
     <% } else { %>
-        <!-- Else, show only the profile info -->
-        <div class="profile-info">
-            <p>Name: <%= profile_user.name %></p>
-            <p>Email: <%= profile_user.email %></p>
-        </div>
+        <section class="main">
+            <div class="profile-card">
+              <div class="image">
+                <img
+                 src="<%= profile_user.avatar %>"
+                 alt=""
+                  class="profile-pic"
+                />
+              </div>
+              <div class="data">
+                <h2><%= profile_user.name %></h2>
+                <span><%= profile_user.email %></span>
+              </div>
+              <div class="buttons">
+                <a href="/" class="btn">Home</a>
+                <a href="<%= profile_user.avatar %>" class="btn">Download</a>
+              </div>
+            </div>
+          </section>
+
+
+
+
     <% } %>
 </div>
