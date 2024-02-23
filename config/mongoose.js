@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/codeial_development');
+const MONGO_URL = "mongodb+srv://mishrasiddharth1999:Reenter2@cluster0.luszmis.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+mongoose.connect(MONGO_URL);
+
+
 
 const db = mongoose.connection;
 
