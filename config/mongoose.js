@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const MONGO_URL = "mongodb+srv://mishrasiddharth1999:Reenter2@cluster0.luszmis.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-mongoose.connect(MONGO_URL);
+mongoose.connect(MONGO_URL,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
 
 
