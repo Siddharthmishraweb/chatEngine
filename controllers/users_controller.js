@@ -3,13 +3,31 @@ const fs = require('fs');
 const path = require('path');
 
 // let's keep it same as before
-module.exports.profile = function(req, res){
-    User.findById(req.params.id, function(err, user){
+module.exports.profile =async function(req, res){
+    // User.findById(req.params.id, function(err, user){
+    //     return res.render('user_profile', {
+    //         title: 'User Profile',
+    //         profile_user: user
+    //     });
+    // });
+
+    try {
+        const user = await User.findById(req.params.id);
+    
+        if (!user) {
+            console.log('User not found');
+            return res.status(404).send('User not found');
+        }
+    
         return res.render('user_profile', {
             title: 'User Profile',
             profile_user: user
         });
-    });
+    } catch (err) {
+        console.error('Error in finding user:', err);
+        return res.status(500).send('Internal Server Error');
+    }
+    
 
 }
 

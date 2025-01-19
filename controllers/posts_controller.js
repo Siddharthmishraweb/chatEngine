@@ -2,16 +2,47 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 const Like = require('../models/like');
 
-module.exports.create = async function(req, res){
-    try{
+// module.exports.create = async function(req, res){
+//     try{
+//         let post = await Post.create({
+//             content: req.body.content,
+//             user: req.user._id
+//         });
+        
+//         if (req.xhr){
+//             // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
+//             post = await post.populate('user', 'name').execPopulate();
+
+//             return res.status(200).json({
+//                 data: {
+//                     post: post
+//                 },
+//                 message: "Post created!"
+//             });
+//         }
+
+//         req.flash('success', 'Post published!');
+//         return res.redirect('back');
+
+//     }catch(err){
+//         req.flash('error', err);
+//         // added this to view the error on console as well
+//         console.log(err);
+//         return res.redirect('back');
+//     }
+  
+// }
+
+module.exports.create = async function(req, res) {
+    try {
         let post = await Post.create({
             content: req.body.content,
             user: req.user._id
         });
-        
-        if (req.xhr){
-            // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
-            post = await post.populate('user', 'name').execPopulate();
+
+        if (req.xhr) {
+            // Populate the user's name directly
+            post = await post.populate('user', 'name');
 
             return res.status(200).json({
                 data: {
@@ -23,15 +54,12 @@ module.exports.create = async function(req, res){
 
         req.flash('success', 'Post published!');
         return res.redirect('back');
-
-    }catch(err){
-        req.flash('error', err);
-        // added this to view the error on console as well
-        console.log(err);
+    } catch (err) {
+        req.flash('error', err.message);
+        console.error('Error:', err); // Log the error for debugging
         return res.redirect('back');
     }
-  
-}
+};
 
 
 module.exports.destroy = async function(req, res){

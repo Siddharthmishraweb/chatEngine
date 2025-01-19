@@ -5,12 +5,62 @@ const queue = require('../config/kue');
 const commentEmailWorker = require('../workers/comment_email_worker');
 const Like = require('../models/like');
 
-module.exports.create = async function(req, res){
+// module.exports.create = async function(req, res){
 
-    try{
+//     try{
+//         let post = await Post.findById(req.body.post);
+
+//         if (post){
+//             let comment = await Comment.create({
+//                 content: req.body.content,
+//                 post: req.body.post,
+//                 user: req.user._id
+//             });
+
+//             post.comments.push(comment);
+//             post.save();
+            
+//             comment = await comment.populate('user', 'name email').execPopulate();
+//             // commentsMailer.newComment(comment);
+
+//             let job = queue.create('emails', comment).save(function(err){
+//                 if (err){
+//                     console.log('Error in sending to the queue', err);
+//                     return;
+//                 }
+//                 console.log('job enqueued', job.id);
+
+//             })
+
+//             if (req.xhr){
+                
+    
+//                 return res.status(200).json({
+//                     data: {
+//                         comment: comment
+//                     },
+//                     message: "Post created!"
+//                 });
+//             }
+
+
+//             req.flash('success', 'Comment published!');
+
+//             res.redirect('/');
+//         }
+//     }catch(err){
+//         req.flash('error', err);
+//         return;
+//     }
+    
+// }
+
+
+module.exports.create = async function(req, res) {
+    try {
         let post = await Post.findById(req.body.post);
 
-        if (post){
+        if (post) {
             let comment = await Comment.create({
                 content: req.body.content,
                 post: req.body.post,
@@ -18,23 +68,22 @@ module.exports.create = async function(req, res){
             });
 
             post.comments.push(comment);
-            post.save();
+            await post.save(); // Always await save operations for consistency
             
-            comment = await comment.populate('user', 'name email').execPopulate();
-            // commentsMailer.newComment(comment);
+            // Use the new `populate()` method directly
+            comment = await comment.populate('user', 'name email');
 
-            let job = queue.create('emails', comment).save(function(err){
-                if (err){
+            // Enqueue the job
+            let job = queue.create('emails', comment).save(function(err) {
+                if (err) {
                     console.log('Error in sending to the queue', err);
                     return;
                 }
                 console.log('job enqueued', job.id);
+            });
 
-            })
-
-            if (req.xhr){
-                
-    
+            // Handle XHR requests
+            if (req.xhr) {
                 return res.status(200).json({
                     data: {
                         comment: comment
@@ -43,17 +92,16 @@ module.exports.create = async function(req, res){
                 });
             }
 
-
             req.flash('success', 'Comment published!');
-
-            res.redirect('/');
+            return res.redirect('/');
         }
-    }catch(err){
-        req.flash('error', err);
-        return;
+    } catch (err) {
+        console.error('Error:', err); // Log the error for debugging
+        req.flash('error', err.message);
+        return res.redirect('back');
     }
-    
-}
+};
+
 
 
 module.exports.destroy = async function(req, res){
